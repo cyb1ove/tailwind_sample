@@ -1,7 +1,10 @@
 #IDE
 
 .vscode
+.cache
+.husky
 
 #Node
 
 node_modules
+dist
