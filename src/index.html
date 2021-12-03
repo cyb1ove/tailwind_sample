@@ -6,14 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
+  <script defer src="index.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"></script>
 </head>
 <body>
-  <section class="text-gray-100">
-    <h2>Welcome</h2>
-    <form action="" method="post">
-      <input type="text" placeholder="Email address">
-      <input type="password" placeholder="Password">
+  <section
+    x-data="{ isSubmit: false, isEmailValid: true }"
+    class="flex flex-col"
+  >
+    <h2
+      x-text=""
+    >
+      Welcome
+    </h2>
+    
+    <form id="form" action="" method="post">
+      <input id="email" class="block" type="email" placeholder="Email address" x-on:input="isEmailValid = $el.validity.valid">
+      <input id="password" class="block" type="password" placeholder="Password">
+      <button
+        type="submit"
+        @click="isSubmit = true"
+        :class="isSubmit && !isEmailValid ? 'bg-red-500' : '' "
+      >
+      Login
+    </button>
     </form>
   </section>
 </body>
 </html>
+  
