@@ -5,29 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.e308ff8e.css">
+  <script defer="" src="/src.e31bb0bc.js"></script>
   <title>Document</title>
-  <script defer="" src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js"></script>
 <script src="/style.e308ff8e.js"></script></head>
 <body>
-  <section x-data="form()" class="flex flex-col">
-    <h3 x-show="message" x-text="message"></h3>
+  <section x-data="form" class="flex flex-col">
+    <h3 x-text="email.error ? 'Oops' : password.error ? 'Wrong password' : 'Welcome'"></h3>
     
     <form id="form" action="" method="post" @submit.prevent="submit">
-      <input id="email" class="block" type="email" placeholder="Email address">
-      <input id="password" class="block" type="password" placeholder="Password">
-      <button type="submit">Log in</button>
+      <input id="email" class="block" type="email" placeholder="Email address" x-model="email.value" @input="email.error = false; password.error = false" @click.away="verifyEmail">
+      
+      <input id="password" class="block" type="password" placeholder="Password" x-model="password.value" @input="email.error = false; password.error = false">
+      
+      <button type="submit" x-text="(email.error || password.error) ? 'Retry' : 'Log in'" :class="{'bg-red-500': email.error || password.error}">
+      </button>
     </form>
   </section>
-  <script>function form() {
-  return data = {
-    message: 'Welcome',
-    submit: function submit(event) {
-      var users = JSON.parse(localStorage.getItem('users'));
-      data.message = 'fsdf';
-      console.log(data);
-    }
-  };
-}</script>
 </body>
 </html>
   
