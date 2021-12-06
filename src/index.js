@@ -1,20 +1,14 @@
-// import Alpine from 'alpinejs';
+import Alpine from 'alpinejs';
 
-// window.Alpine = Alpine;
+window.Alpine = Alpine;
 
-// Alpine.start();
+Alpine.start();
 
-const form = document.getElementById('form');
-const email = document.getElementById('email');
-// const password = document.getElementById('password');
-
-function submitForm(event) {
-  event.preventDefault();
+function form() {
+  return {
+    a: 'fsdf',
+    b: 3,
+  };
 }
 
-form.addEventListener('submit', submitForm);
-
-email.addEventListener('input', () => {
-  email.setCustomValidity('');
-  email.checkValidity();
-});
+Alpine.data('form', form);
