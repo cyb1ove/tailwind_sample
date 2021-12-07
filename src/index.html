@@ -1,49 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="index.js"></script>
-  <title>Document</title>
-</head>
-<body>
-  <section
-    x-data="form"
-    class="flex flex-col"
-  >
-    <h3
-      x-text="email.error ? 'Oops' : password.error ? 'Wrong password' : 'Welcome'"
-    ></h3>
-    
-    <form id="form" action="" method="post" @submit.prevent="submit">
-      <input
-        id="email"
-        class="block"
-        type="email"
-        placeholder="Email address"
-        x-model="email.value"
-        @input="email.error = false; password.error = false"
-        @click.away="verifyEmail"
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="index.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <section x-data="form" class="flex flex-col">
+      <div class="w-1/6 mx-auto my-10">
+        <img
+          src="./images/abler-logo.svg"
+          alt="Home Logo"
+        >
+      </div>
+
+      <h3
+        class="text-base h-10 px-4"
+        x-text="email.error ? 'Oops!' : password.error ? 'Wrong password' : 'Welcome'"
+      ></h3>
+
+      <form
+        id="form"
+        action=""
+        method="post"
+        @submit.prevent="submit"
+        autocomplete="off"
       >
-      
-      <input
-        id="password"
-        class="block"
-        type="password"
-        placeholder="Password"
-        x-model="password.value"
-        @input="email.error = false; password.error = false"
-      >
-      
-      <button
-        type="submit"
-        x-text="(email.error || password.error) ? 'Retry' : 'Log in'"
-        :class="{'bg-red-500': email.error || password.error}">
-      </button>
-    </form>
-  </section>
-</body>
+        <label for="email" class="block bg-gray-100">
+          <input
+            id="email"
+            class="block w-full outline-none component"
+            type="email"
+            placeholder="Email address"
+            x-model="email.value"
+            @input="email.error = false; password.error = false"
+            @click.away="email.completed = Boolean(email.value)"
+          />
+
+          <div
+            :class="{
+              'w-full': email.completed,
+              'w-2/3': !email.completed && email.value,
+              'w-0': !email.completed && !email.value,
+              'bg-green-300': !email.error,
+              'bg-red-300': email.error
+            }"
+            class="h-px"
+          ></div>
+        </label>
+
+        <label for="password" class="block pb-px bg-gray-100">
+          <input
+            id="password"
+            class="block w-full outline-none component"
+            type="password"
+            placeholder="Password"
+            x-model="password.value"
+            @input="email.error = false; password.error = false"
+            @click.away="password.completed = Boolean(password.value)"
+          />
+
+          <div
+            :class="{
+              'w-full': password.completed,
+              'w-2/3': !password.completed && password.value,
+              'w-0': !password.completed && !password.value,
+              'bg-green-300': !password.error,
+              'bg-red-300': password.error
+            }"
+            class="h-px"
+          ></div>
+        </label>
+
+
+        <div class="flex justify-between component">
+          <button
+            class="text-xs text-gray-400"
+          >
+            Forgot Password
+          </button>
+
+          <button
+            type="submit"
+            x-text="(email.error || password.error) ? 'Retry' : (email.completed || password.completed) ? 'Log in' : 'Login'"
+            :class="{
+              'bg-red-300 border-red-300 text-white': isAnyPropertyTrue('error'),
+              'bg-green-300 border-green-300 text-white': 
+                isAnyPropertyTrue('completed') && !isAnyPropertyTrue('error'),
+              'text-gray-400': !isAnyPropertyTrue('error') && !isAnyPropertyTrue('completed')
+            }"
+            class="text-xs border-solid border border-gray-300 py-1 px-4 rounded-xl"
+          ></button>
+        </div>
+      </form>
+    </section>
+  </body>
 </html>
-  

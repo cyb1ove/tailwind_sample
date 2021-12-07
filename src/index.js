@@ -8,21 +8,34 @@ function form() {
     email: {
       value: '',
       error: false,
+      completed: false,
     },
     password: {
       value: '',
       error: false,
+      completed: false,
     },
     init() {
-      this.users = JSON.parse(localStorage.getItem('users'));
+      this.users = JSON.parse(localStorage.getItem('users')) || {};
     },
     verifyEmail() {
-      return !Object.prototype.hasOwnProperty.call(this.users, this.email.value);
+      return !Object.prototype.hasOwnProperty.call(
+        this.users,
+        this.email.value,
+      );
+    },
+    verifyPassword() {
+      return this.password.value !== this.users[this.email.value];
+    },
+    isAnyPropertyTrue(prop) {
+      return this.email[prop] || this.password[prop];
     },
     submit() {
       if (this.verifyEmail()) {
         this.email.error = true;
-      } else if (this.password.value !== this.users[this.email.value]) {
+        this.password.value = '';
+        this.password.completed = false;
+      } else if (this.verifyPassword()) {
         this.value.error = true;
       }
     },
