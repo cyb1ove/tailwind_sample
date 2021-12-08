@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script defer src="index.js"></script>
     <title>Document</title>
   </head>
   <body>
-    <section x-data="form" class="flex flex-col">
+    <section x-data="{ ...$store.methods }" class="flex flex-col">
       <div class="w-1/6 mx-auto my-10">
         <img
           src="./images/abler-logo.svg"
@@ -29,15 +28,21 @@
         @submit.prevent="submit"
         autocomplete="off"
       >
-        <label for="email" class="block bg-gray-100">
+        <label
+          x-data="{
+            email: $store.data.inputs.email,
+          }"
+          for="email"
+          class="block bg-gray-100"
+        >
           <input
             id="email"
             class="block w-full outline-none component"
             type="email"
             placeholder="Email address"
             x-model="email.value"
-            @input="email.error = false; password.error = false"
-            @click.away="email.completed = Boolean(email.value)"
+            @input="inputChange()"
+            @blur="completeInput($el.id)"
           />
 
           <div
@@ -52,15 +57,21 @@
           ></div>
         </label>
 
-        <label for="password" class="block pb-px bg-gray-100">
+        <label
+          x-data="{
+            password: $store.data.inputs.password
+          }"
+          for="password"
+          class="block pb-px bg-gray-100"
+        >
           <input
             id="password"
             class="block w-full outline-none component"
             type="password"
             placeholder="Password"
             x-model="password.value"
-            @input="email.error = false; password.error = false"
-            @click.away="password.completed = Boolean(password.value)"
+            @input="inputChange()"
+            @blur="completeInput($el.id)"
           />
 
           <div
@@ -98,4 +109,8 @@
       </form>
     </section>
   </body>
+  <script src="index.js"></script>
+  <script>
+
+  </script>
 </html>
