@@ -8,14 +8,17 @@
     <title>Document</title>
   <script src="/style.e308ff8e.js"></script></head>
   <body>
-    <section x-data="{ ...$store.methods }" class="flex flex-col">
+    <section class="flex flex-col">
       <div class="w-1/6 mx-auto my-10">
         <img src="/abler-logo.fcd2191f.svg" alt="Home Logo">
       </div>
 
-      <h3 class="text-base h-10 px-4" x-text="email.error ? 'Oops!' : password.error ? 'Wrong password' : 'Welcome'"></h3>
+      <form id="form" action="" method="post" x-data="{
+          ...$store.methods
+        }" @submit.prevent="submit" autocomplete="off">
 
-      <form id="form" action="" method="post" @submit.prevent="submit" autocomplete="off">
+        <h3 class="text-base h-10 px-4" x-text="email.error ? 'Oops!' : password.error ? 'Wrong password' : 'Welcome'"></h3>
+
         <label x-data="{
             email: $store.data.inputs.email,
           }" for="email" class="block bg-gray-100">
