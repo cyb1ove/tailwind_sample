@@ -9,6 +9,7 @@ module.exports = {
     textColor: {
       white: '#FFF',
       black: '#000',
+      gray: '#A9A9A9',
     },
   },
   variants: {

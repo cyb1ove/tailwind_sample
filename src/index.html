@@ -21,23 +21,21 @@
         action=""
         method="post"
         x-data="{
-          ...$store.methods
+          ...$store.behavior_methods,
+          ...$store.data
         }"
         @submit.prevent="submit"
-        autocomplete="off"
       >
 
         <h3
           class="text-base h-10 px-4"
-          x-text="email.error ? 'Oops!' : password.error ? 'Wrong password' : 'Welcome'"
+          x-text="inputs.email.error ? 'Oops!' : inputs.password.error ? 'Wrong password' : 'Welcome'"
         ></h3>
 
         <label
-          x-data="{
-            email: $store.data.inputs.email,
-          }"
+          x-init="email = inputs.email",
           for="email"
-          class="block bg-gray-100"
+          class="block pb-px bg-gray-100"
         >
           <input
             id="email"
@@ -46,7 +44,7 @@
             placeholder="Email address"
             x-model="email.value"
             @input="inputChange()"
-            @blur="completeInput($el.id)"
+            @blur="completeInput($el, email.value)"
           />
 
           <div
@@ -62,9 +60,7 @@
         </label>
 
         <label
-          x-data="{
-            password: $store.data.inputs.password
-          }"
+          x-data="password = inputs.password"
           for="password"
           class="block pb-px bg-gray-100"
         >
@@ -75,7 +71,7 @@
             placeholder="Password"
             x-model="password.value"
             @input="inputChange()"
-            @blur="completeInput($el.id)"
+            @blur="completeInput($el, password.value)"
           />
 
           <div
@@ -91,30 +87,26 @@
         </label>
 
 
-        <div class="flex justify-between component">
+        <div x-data="{ ...$store.condition_methods }" class="flex justify-between component">
           <button
-            class="text-xs text-gray-400"
+            class="text-xs text-gray"
           >
             Forgot Password
           </button>
 
           <button
             type="submit"
-            x-text="(email.error || password.error) ? 'Retry' : (email.completed || password.completed) ? 'Log in' : 'Login'"
+            x-text="isAnyPropertyTrue('error') ? 'Retry' : isAnyPropertyTrue('completed') ? 'Log in' : 'Login'"
             :class="{
-              'bg-red-300 border-red-300 text-white': isAnyPropertyTrue('error'),
-              'bg-green-300 border-green-300 text-white': 
-                isAnyPropertyTrue('completed') && !isAnyPropertyTrue('error'),
-              'text-gray-400': !isAnyPropertyTrue('error') && !isAnyPropertyTrue('completed')
+              'btn-warn': isAnyPropertyTrue('error'),
+              'btn-ok': isAnyPropertyTrue('completed') && !isAnyPropertyTrue('error'),
+              'btn': !isAnyPropertyTrue('error') && !isAnyPropertyTrue('completed')
             }"
-            class="text-xs border-solid border border-gray-300 py-1 px-4 rounded-xl"
+            class="text-xs border-solid border py-1 px-4 rounded-xl"
           ></button>
         </div>
       </form>
     </section>
   </body>
   <script src="index.js"></script>
-  <script>
-
-  </script>
 </html>

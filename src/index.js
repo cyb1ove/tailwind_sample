@@ -19,7 +19,7 @@ Alpine.store('data', {
   },
 });
 
-Alpine.store('methods', {
+Alpine.store('behavior_methods', {
   data: Alpine.store('data'),
   verifyEmail() {
     return !Object.prototype.hasOwnProperty.call(
@@ -30,8 +30,12 @@ Alpine.store('methods', {
   verifyPassword() {
     return this.data.inputs.password.value !== this.data.users[this.data.email.value];
   },
-  completeInput(name) {
-    this.data.inputs[name].completed = Boolean(this.data.inputs[name].value);
+  completeInput(element, value) {
+    const input = this.data.inputs[element.id];
+
+    element.checkValidity();
+    input.completed = Boolean(value);
+    input.error = !element.validity.valid;
   },
   inputChange() {
     if (!Object.values(this.data.inputs).some((input) => input.error)) {
@@ -40,11 +44,7 @@ Alpine.store('methods', {
       });
     }
   },
-  isAnyPropertyTrue(prop) {
-    return this.data.inputs.email[prop] || this.data.inputs.password[prop];
-  },
   submit() {
-    console.log('fsdf');
     if (this.verifyEmail()) {
       this.data.inputs.email.error = true;
       this.data.inputs.password.value = '';
@@ -52,6 +52,12 @@ Alpine.store('methods', {
     } else if (this.verifyPassword()) {
       this.data.inputs.password.error = true;
     }
+  },
+});
+
+Alpine.store('condition_methods', {
+  isAnyPropertyTrue(prop) {
+    return Alpine.store('data').inputs.email[prop] || Alpine.store('data').inputs.password[prop];
   },
 });
 
