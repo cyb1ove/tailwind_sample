@@ -30,11 +30,11 @@ Alpine.store('behavior_methods', {
   verifyPassword() {
     return this.data.inputs.password.value !== this.data.users[this.data.email.value];
   },
-  completeInput(element, value) {
+  completeInput(element) {
     const input = this.data.inputs[element.id];
 
     element.checkValidity();
-    input.completed = Boolean(value);
+    input.completed = Boolean(input.value);
     input.error = !element.validity.valid;
   },
   inputChange(element) {
@@ -66,7 +66,7 @@ Alpine.store('condition_methods', {
   isAnyPropertyTrue(prop) {
     return Alpine.store('data').inputs.email[prop] || Alpine.store('data').inputs.password[prop];
   },
-
+  
 });
 
 Alpine.start();

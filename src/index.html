@@ -35,7 +35,7 @@
         <label
           x-init="email = inputs.email",
           for="email"
-          class="block pb-px bg-gray-100"
+          class="block bg-gray-100"
         >
           <input
             id="email"
@@ -44,25 +44,21 @@
             placeholder="Email address"
             x-model="email.value"
             @input="inputChange($el)"
-            @blur="completeInput($el, email.value)"
+            @blur="completeInput($el)"
           />
 
-          <div
-            :class="{
-              'w-full': email.completed,
-              'w-2/3': !email.completed && email.value,
-              'w-0': !email.completed && !email.value,
-              'bg-green-300': !email.error,
-              'bg-red-300': email.error
-            }"
-            class="h-px"
-          ></div>
+          <div :class="email.completed ? 'w-full' : email.value ? 'w-2/3' : 'w-0'">
+            <div
+              :class="email.error ? 'bg-red-300' : 'bg-green-300'"
+              class="h-px"
+            ></div>
+          </div>
         </label>
 
         <label
           x-data="password = inputs.password"
           for="password"
-          class="block pb-px bg-gray-100"
+          class="block bg-gray-100"
         >
           <input
             id="password"
@@ -71,19 +67,15 @@
             placeholder="Password"
             x-model="password.value"
             @input="inputChange($el)"
-            @blur="completeInput($el, password.value)"
+            @blur="completeInput($el)"
           />
 
-          <div
-            :class="{
-              'w-full': password.completed,
-              'w-2/3': !password.completed && password.value,
-              'w-0': !password.completed && !password.value,
-              'bg-green-300': !password.error,
-              'bg-red-300': password.error
-            }"
-            class="h-px"
-          ></div>
+          <div :class="password.completed ? 'w-full' : password.value ? 'w-2/3' : 'w-0'">
+            <div
+              :class="password.error ? 'bg-red-300' : 'bg-green-300'"
+              class="h-px"
+            ></div>
+          </div>
         </label>
 
 
