@@ -4,7 +4,6 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
 Alpine.store('data', {
-  users: JSON.parse(localStorage.getItem('users')) || {},
   inputs: {
     email: {
       value: '',
@@ -22,33 +21,40 @@ Alpine.store('data', {
 Alpine.store('behavior_methods', {
   data: Alpine.store('data'),
   verifyEmail() {
-    return !Object.prototype.hasOwnProperty.call(
-      this.data.users,
-      this.data.inputs.email.value,
-    );
+    const email = this.data.inputs.email.value;
+
+    return !localStorage.getItem(email);
   },
   verifyPassword() {
-    return this.data.inputs.password.value !== this.data.users[this.data.email.value];
+    const email = this.data.inputs.email.value;
+    const password = this.data.inputs.password.value;
+
+    return password !== localStorage.getItem(email);
   },
   completeInput(element) {
     const input = this.data.inputs[element.id];
 
     element.checkValidity();
+
     input.completed = Boolean(input.value);
-    input.error = !element.validity.valid;
+
+    if (!input.error) {
+      input.error = !element.validity.valid;
+    }
   },
   inputChange(element) {
     const input = this.data.inputs[element.id];
 
-    if (!Object.values(this.data.inputs).some((currentInput) => currentInput.error)) {
+    if (!Alpine.store('condition_methods').isAnyPropertyTrue('error')) {
       Object.keys(this.data.inputs).forEach((name) => {
         this.data.inputs[name].error = false;
       });
     }
 
+    input.completed = false;
+
     if (!input.value) {
       input.error = false;
-      input.completed = false;
     }
   },
   submit() {
@@ -56,7 +62,11 @@ Alpine.store('behavior_methods', {
       this.data.inputs.email.error = true;
       this.data.inputs.password.value = '';
       this.data.inputs.password.completed = false;
-    } else if (this.verifyPassword()) {
+    } else {
+      this.data.inputs.email.error = false;
+    }
+
+    if (this.verifyPassword) {
       this.data.inputs.password.error = true;
     }
   },
@@ -64,9 +74,8 @@ Alpine.store('behavior_methods', {
 
 Alpine.store('condition_methods', {
   isAnyPropertyTrue(prop) {
-    return Alpine.store('data').inputs.email[prop] || Alpine.store('data').inputs.password[prop];
+    return Object.values(Alpine.store('data').inputs).some((currentInput) => currentInput[prop]);
   },
-  
 });
 
 Alpine.start();

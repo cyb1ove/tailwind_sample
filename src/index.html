@@ -8,8 +8,8 @@
     <title>Document</title>
   </head>
   <body>
-    <section class="flex flex-col">
-      <div class="w-1/6 mx-auto my-10">
+    <section class="flex flex-col max-w-xs m-auto">
+      <div class="w-16 mx-auto my-12">
         <img
           src="./images/abler-logo.svg"
           alt="Home Logo"
@@ -22,24 +22,31 @@
         method="post"
         x-data="{
           ...$store.behavior_methods,
-          ...$store.data
+          ...$store.data,
+          ...$store.condition_methods,
         }"
         @submit.prevent="submit"
       >
 
         <h3
           class="text-base h-10 px-4"
-          x-text="inputs.email.error ? 'Oops!' : inputs.password.error ? 'Wrong password' : 'Welcome'"
+          x-text="inputs.email.error ? 'Invalid email!' : inputs.password.error ? 'Invalid password' : 'Welcome'"
         ></h3>
 
         <label
           x-init="email = inputs.email",
           for="email"
-          class="block bg-gray-100"
+          class="relative block bg-gray-100"
         >
+          <svg
+            class="absolute h-3 w-3 inset-y-1/2 transform -translate-y-1/2 ml-4"
+            :class="email.value ? 'text-black' : 'text-gray'"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"/>
+          </svg>
           <input
             id="email"
-            class="block w-full outline-none component"
+            class="block w-full outline-none component pl-9"
             type="email"
             placeholder="Email address"
             x-model="email.value"
@@ -47,7 +54,18 @@
             @blur="completeInput($el)"
           />
 
-          <div :class="email.completed ? 'w-full' : email.value ? 'w-2/3' : 'w-0'">
+          <div class="absolute inset-y-0 right-0 pr-5 flex items-center text-sm leading-5">
+            <div
+              x-show="email.value"
+              :class="email.error ? 'border-red-400' : 'border-green-400'"
+              class="w-2 h-3 border-r border-b transform rotate-45">
+
+            </div>
+          </div>
+
+          <div
+            :class="email.completed ? 'w-full' : email.value ? 'w-2/3' : 'w-0'"
+          >
             <div
               :class="email.error ? 'bg-red-300' : 'bg-green-300'"
               class="h-px"
@@ -56,19 +74,34 @@
         </label>
 
         <label
-          x-data="password = inputs.password"
+          x-data="{ show: false }"
+          x-init="password = inputs.password"
           for="password"
-          class="block bg-gray-100"
+          class="relative block bg-gray-100"
         >
+          
           <input
             id="password"
-            class="block w-full outline-none component"
-            type="password"
+            class="relative block w-full outline-none component pl-9"
+            :type="show ? 'text' : 'password'"
             placeholder="Password"
+            minlength="6"
             x-model="password.value"
             @input="inputChange($el)"
             @blur="completeInput($el)"
-          />
+          >
+
+          <div class="absolute inset-y-0 right-0 pr-4 flex items-center text-sm leading-5">
+            <svg
+              class="h-3"
+              @click="show = !show"
+              :class="show ? 'text-black' : 'text-gray'"
+              viewbox="0 0 640 512">
+              <path fill="currentColor"
+                d="M320 400c-75.85 0-137.25-58.71-142.9-133.11L72.2 185.82c-13.79 17.3-26.48 35.59-36.72 55.59a32.35 32.35 0 0 0 0 29.19C89.71 376.41 197.07 448 320 448c26.91 0 52.87-4 77.89-10.46L346 397.39a144.13 144.13 0 0 1-26 2.61zm313.82 58.1l-110.55-85.44a331.25 331.25 0 0 0 81.25-102.07 32.35 32.35 0 0 0 0-29.19C550.29 135.59 442.93 64 320 64a308.15 308.15 0 0 0-147.32 37.7L45.46 3.37A16 16 0 0 0 23 6.18L3.37 31.45A16 16 0 0 0 6.18 53.9l588.36 454.73a16 16 0 0 0 22.46-2.81l19.64-25.27a16 16 0 0 0-2.82-22.45zm-183.72-142l-39.3-30.38A94.75 94.75 0 0 0 416 256a94.76 94.76 0 0 0-121.31-92.21A47.65 47.65 0 0 1 304 192a46.64 46.64 0 0 1-1.54 10l-73.61-56.89A142.31 142.31 0 0 1 320 112a143.92 143.92 0 0 1 144 144c0 21.63-5.29 41.79-13.9 60.11z">
+              </path>
+            </svg>
+          </div>
 
           <div :class="password.completed ? 'w-full' : password.value ? 'w-2/3' : 'w-0'">
             <div
@@ -81,19 +114,29 @@
 
         <div x-data="{ ...$store.condition_methods }" class="flex justify-between component">
           <button
-            class="text-xs text-gray"
+            class="flex items-center text-xs text-gray"
           >
-            Forgot Password
+            <svg
+              class="h-5 w-3 text-gray"
+              viewBox="0 0 12 12"
+              version="1.1"
+            >
+              <g id="surface1">
+              <path style="fill:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(169,169,169);stroke-opacity:1;stroke-miterlimit:4;" d="M 89.003906 9.023438 C 44.472656 9.550781 8.730469 45.9375 9.023438 90.46875 C 9.257812 135.058594 45.46875 170.976562 90 170.976562 C 134.53125 170.976562 170.742188 135.058594 170.976562 90.46875 C 171.269531 45.9375 135.527344 9.550781 90.996094 9.023438 Z M 90 46.992188 L 90 105 M 90 130.019531 L 90 131.015625 " transform="matrix(0.0666667,0,0,0.0666667,0,0)"/>
+              </g>
+            </svg>
+
+            <span
+              class="pl-2"
+            >
+              Forgot Password
+            </span>
           </button>
 
           <button
             type="submit"
             x-text="isAnyPropertyTrue('error') ? 'Retry' : isAnyPropertyTrue('completed') ? 'Log in' : 'Login'"
-            :class="{
-              'btn-warn': isAnyPropertyTrue('error'),
-              'btn-ok': isAnyPropertyTrue('completed') && !isAnyPropertyTrue('error'),
-              'btn': !isAnyPropertyTrue('error') && !isAnyPropertyTrue('completed')
-            }"
+            :class="isAnyPropertyTrue('error') ? 'btn-warn' : isAnyPropertyTrue('completed') ? 'btn-ok' : 'btn'"
             class="text-xs border-solid border py-1 px-4 rounded-xl"
           ></button>
         </div>
