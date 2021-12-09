@@ -43,7 +43,7 @@
             type="email"
             placeholder="Email address"
             x-model="email.value"
-            @input="inputChange()"
+            @input="inputChange($el)"
             @blur="completeInput($el, email.value)"
           />
 
@@ -70,7 +70,7 @@
             type="password"
             placeholder="Password"
             x-model="password.value"
-            @input="inputChange()"
+            @input="inputChange($el)"
             @blur="completeInput($el, password.value)"
           />
 

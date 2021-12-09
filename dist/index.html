@@ -21,7 +21,7 @@
         <h3 class="text-base h-10 px-4" x-text="inputs.email.error ? 'Oops!' : inputs.password.error ? 'Wrong password' : 'Welcome'"></h3>
 
         <label x-init="email = inputs.email" ,="" for="email" class="block pb-px bg-gray-100">
-          <input id="email" class="block w-full outline-none component" type="email" placeholder="Email address" x-model="email.value" @input="inputChange()" @blur="completeInput($el, email.value)">
+          <input id="email" class="block w-full outline-none component" type="email" placeholder="Email address" x-model="email.value" @input="inputChange($el)" @blur="completeInput($el, email.value)">
 
           <div :class="{
               'w-full': email.completed,
@@ -33,7 +33,7 @@
         </label>
 
         <label x-data="password = inputs.password" for="password" class="block pb-px bg-gray-100">
-          <input id="password" class="block w-full outline-none component" type="password" placeholder="Password" x-model="password.value" @input="inputChange()" @blur="completeInput($el, password.value)">
+          <input id="password" class="block w-full outline-none component" type="password" placeholder="Password" x-model="password.value" @input="inputChange($el)" @blur="completeInput($el, password.value)">
 
           <div :class="{
               'w-full': password.completed,

@@ -37,11 +37,18 @@ Alpine.store('behavior_methods', {
     input.completed = Boolean(value);
     input.error = !element.validity.valid;
   },
-  inputChange() {
-    if (!Object.values(this.data.inputs).some((input) => input.error)) {
+  inputChange(element) {
+    const input = this.data.inputs[element.id];
+
+    if (!Object.values(this.data.inputs).some((currentInput) => currentInput.error)) {
       Object.keys(this.data.inputs).forEach((name) => {
         this.data.inputs[name].error = false;
       });
+    }
+
+    if (!input.value) {
+      input.error = false;
+      input.completed = false;
     }
   },
   submit() {
@@ -59,6 +66,7 @@ Alpine.store('condition_methods', {
   isAnyPropertyTrue(prop) {
     return Alpine.store('data').inputs.email[prop] || Alpine.store('data').inputs.password[prop];
   },
+
 });
 
 Alpine.start();
