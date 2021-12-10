@@ -15,41 +15,35 @@ Alpine.store('data', {
       error: false,
       completed: false,
     },
+    registration: false,
+    message: 'Welcome',
   },
 });
 
 Alpine.store('behavior_methods', {
   data: Alpine.store('data'),
-  verifyEmail() {
+  verifyUser() {
     const email = this.data.inputs.email.value;
 
-    return !localStorage.getItem(email);
+    return Boolean(localStorage.getItem(email));
   },
   verifyPassword() {
     const email = this.data.inputs.email.value;
     const password = this.data.inputs.password.value;
 
-    return password !== localStorage.getItem(email);
+    return password === localStorage.getItem(email);
   },
   completeInput(element) {
     const input = this.data.inputs[element.id];
 
+    element.setCustomValidity('');
     element.checkValidity();
 
     input.completed = Boolean(input.value);
-
-    if (!input.error) {
-      input.error = !element.validity.valid;
-    }
+    input.error = !element.validity.valid;
   },
   inputChange(element) {
     const input = this.data.inputs[element.id];
-
-    if (!Alpine.store('condition_methods').isAnyPropertyTrue('error')) {
-      Object.keys(this.data.inputs).forEach((name) => {
-        this.data.inputs[name].error = false;
-      });
-    }
 
     input.completed = false;
 
@@ -57,17 +51,40 @@ Alpine.store('behavior_methods', {
       input.error = false;
     }
   },
+  showError(element) {
+    if (!element.value) {
+      element.setCustomValidity(`Enter the ${element.id}`);
+    }
+  },
   submit() {
-    if (this.verifyEmail()) {
-      this.data.inputs.email.error = true;
-      this.data.inputs.password.value = '';
-      this.data.inputs.password.completed = false;
+    if (this.data.inputs.registration) {
+      localStorage.setItem(this.data.inputs.email.value, this.data.inputs.password.value);
+      this.data.inputs.registration = false;
+
+      return;
+    }
+
+    if (!this.verifyUser()) {
+      this.data.inputs.registration = true;
+      this.data.inputs.message = 'Registration';
     } else {
       this.data.inputs.email.error = false;
     }
 
-    if (this.verifyPassword) {
+    if (!this.verifyPassword()) {
       this.data.inputs.password.error = true;
+      this.data.inputs.password.value = '';
+      this.data.inputs.password.completed = false;
+      this.data.inputs.message = 'Incorrect password';
+    } else {
+      this.data.inputs.email.error = false;
+      this.data.inputs.email.completed = false;
+      this.data.inputs.email.value = '';
+      this.data.inputs.password.error = false;
+      this.data.inputs.password.completed = false;
+      this.data.inputs.password.value = '';
+
+      this.data.inputs.message = "You're are signed";
     }
   },
 });

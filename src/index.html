@@ -30,7 +30,7 @@
 
         <h3
           class="text-base h-10 px-4"
-          x-text="inputs.email.error ? 'Invalid email!' : inputs.password.error ? 'Invalid password' : 'Welcome'"
+          x-text="inputs.message"
         ></h3>
 
         <label
@@ -48,10 +48,12 @@
             id="email"
             class="block w-full outline-none component pl-9"
             type="email"
+            required
             placeholder="Email address"
             x-model="email.value"
             @input="inputChange($el)"
             @blur="completeInput($el)"
+            @invalid="showError($el)"
           />
 
           <div class="absolute inset-y-0 right-0 pr-5 flex items-center text-sm leading-5">
@@ -89,6 +91,7 @@
             x-model="password.value"
             @input="inputChange($el)"
             @blur="completeInput($el)"
+            @invalid="showError($el)"
           >
 
           <svg 
@@ -144,7 +147,7 @@
 
           <button
             type="submit"
-            x-text="isAnyPropertyTrue('error') ? 'Retry' : isAnyPropertyTrue('completed') ? 'Log in' : 'Login'"
+            x-text="inputs.registration ? 'Sign up' : isAnyPropertyTrue('error') ? 'Retry' : isAnyPropertyTrue('completed') ? 'Log in' : 'Login'"
             :class="isAnyPropertyTrue('error') ? 'btn-warn' : isAnyPropertyTrue('completed') ? 'btn-ok' : 'btn'"
             class="text-xs border-solid border py-1 px-4 rounded-xl"
           ></button>
