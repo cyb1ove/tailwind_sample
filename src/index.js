@@ -40,7 +40,10 @@ Alpine.store('behavior_methods', {
     element.checkValidity();
 
     input.completed = Boolean(input.value);
-    input.error = !element.validity.valid;
+
+    if (input.value) {
+      input.error = !element.validity.valid;
+    }
   },
   inputChange(element) {
     const input = this.data.inputs[element.id];

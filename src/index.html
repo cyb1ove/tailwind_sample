@@ -25,6 +25,7 @@
           ...$store.data,
           ...$store.condition_methods,
         }"
+        autocomplete="off"
         @submit.prevent="submit"
       >
 
@@ -41,7 +42,7 @@
           <svg
             class="absolute h-3 w-3 inset-y-1/2 transform -translate-y-1/2 ml-4"
             :class="email.value ? 'text-black' : 'text-gray'"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            viewBox="0 0 24 24">
               <path fill="currentColor" d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"/>
           </svg>
           <input
@@ -66,6 +67,7 @@
           </div>
 
           <div
+            class="transition-all duration-100"
             :class="email.completed ? 'w-full' : email.value ? 'w-2/3' : 'w-0'"
           >
             <div
@@ -105,7 +107,7 @@
 
           <div class="absolute inset-y-0 right-0 pr-4 flex items-center text-sm leading-5">
             <svg
-              class="h-3"
+              class="h-3 transition-all duration-100"
               @click="show = !show"
               :class="show ? 'text-black' : 'text-gray'"
               viewbox="0 0 640 512">
@@ -115,7 +117,10 @@
             </svg>
           </div>
 
-          <div :class="password.completed ? 'w-full' : password.value ? 'w-2/3' : 'w-0'">
+          <div
+            class="transition-all duration-100"
+            :class="password.completed ? 'w-full' : password.value ? 'w-2/3' : 'w-0'"
+          >
             <div
               :class="password.error ? 'bg-red-300' : 'bg-green-300'"
               class="h-px"
@@ -133,9 +138,11 @@
               viewBox="0 0 12 12"
               version="1.1"
             >
-              <g id="surface1">
-              <path style="fill:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(169,169,169);stroke-opacity:1;stroke-miterlimit:4;" d="M 89.003906 9.023438 C 44.472656 9.550781 8.730469 45.9375 9.023438 90.46875 C 9.257812 135.058594 45.46875 170.976562 90 170.976562 C 134.53125 170.976562 170.742188 135.058594 170.976562 90.46875 C 171.269531 45.9375 135.527344 9.550781 90.996094 9.023438 Z M 90 46.992188 L 90 105 M 90 130.019531 L 90 131.015625 " transform="matrix(0.0666667,0,0,0.0666667,0,0)"/>
-              </g>
+              <path
+                fill="currentColor"
+                style="fill:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(169,169,169);stroke-opacity:1;stroke-miterlimit:4;"
+                d="M 89.003906 9.023438 C 44.472656 9.550781 8.730469 45.9375 9.023438 90.46875 C 9.257812 135.058594 45.46875 170.976562 90 170.976562 C 134.53125 170.976562 170.742188 135.058594 170.976562 90.46875 C 171.269531 45.9375 135.527344 9.550781 90.996094 9.023438 Z M 90 46.992188 L 90 105 M 90 130.019531 L 90 131.015625 " transform="matrix(0.0666667,0,0,0.0666667,0,0)"
+              />
             </svg>
 
             <span
@@ -149,7 +156,7 @@
             type="submit"
             x-text="inputs.registration ? 'Sign up' : isAnyPropertyTrue('error') ? 'Retry' : isAnyPropertyTrue('completed') ? 'Log in' : 'Login'"
             :class="isAnyPropertyTrue('error') ? 'btn-warn' : isAnyPropertyTrue('completed') ? 'btn-ok' : 'btn'"
-            class="text-xs border-solid border py-1 px-4 rounded-xl"
+            class="text-xs border-solid border py-1 px-4 rounded-xl transition-all duration-100"
           ></button>
         </div>
       </form>
