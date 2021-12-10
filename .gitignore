@@ -1,8 +1,7 @@
 #IDE
-
-.vscode
 .cache
-.husky
+.vscode
+
 
 #Node
 
