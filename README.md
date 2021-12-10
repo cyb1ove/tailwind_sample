@@ -10,6 +10,6 @@ npm install
 npm start
 ```
 
-# DEMO
+# Demo
 
 [Link](cyb1ove.github.io/tailwind_sample)
