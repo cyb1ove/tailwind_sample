@@ -12,4 +12,4 @@ npm start
 
 # Demo
 
-[Link](cyb1ove.github.io/tailwind_sample)
+[Link](https://cyb1ove.github.io/tailwind_sample/)
