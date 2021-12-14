@@ -1,8 +1,6 @@
 /* eslint-disable guard-for-in */
 import Alpine from 'alpinejs';
 
-window.Alpine = Alpine;
-
 Alpine.store('data', {
   inputs: {
     email: {
@@ -34,25 +32,31 @@ Alpine.store('behavior_methods', {
     return password === localStorage.getItem(email);
   },
   completeInput(element) {
-    const input = this.data.inputs[element.id];
+    // const input = this.data.inputs[element.id];
 
+    // element.setCustomValidity('');
+    // element.checkValidity();
+
+    // input.completed = Boolean(input.value);
+
+    // if (input.value) {
+    //   input.error = !element.validity.valid;
+    // }
     element.setCustomValidity('');
     element.checkValidity();
-
-    input.completed = Boolean(input.value);
-
-    if (input.value) {
-      input.error = !element.validity.valid;
-    }
+    console.log(element.validity);
   },
   inputChange(element) {
-    const input = this.data.inputs[element.id];
+    // const input = this.data.inputs[element.id];
 
-    input.completed = false;
+    // input.completed = false;
 
-    if (!input.value) {
-      input.error = false;
-    }
+    // if (!input.value) {
+    //   input.error = false;
+    // }
+    element.setCustomValidity('');
+    element.checkValidity();
+    console.log(element.validity);
   },
   showError(element) {
     if (!element.value) {

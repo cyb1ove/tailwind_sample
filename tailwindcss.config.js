@@ -1,10 +1,11 @@
 module.exports = {
-  purge: [],
+  mode: 'jit',
+  purge: ['./src/*.{html,js,css}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
     fontSize: {
-      xs: '.62rem',
+      xs: '.65rem',
     },
     textColor: {
       white: '#FFF',
@@ -16,7 +17,5 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
   },
-  plugins: [],
 };
