@@ -84,7 +84,7 @@
             :class="email ? 'w-full' : valid ? 'w-2/3' : 'w-0'"
           >
             <div
-              class="h-px bg-green-300"
+              class="h-px bg-green"
             ></div>
           </div>
         </label>
@@ -137,7 +137,7 @@
             :class="password ? 'w-full' : valid ? 'w-2/3' : 'w-0'"
           >
             <div
-              class="h-px bg-green-300"
+              class="h-px bg-green"
             ></div>
           </div>
         </label>
@@ -168,10 +168,10 @@
 
           <button
             type="submit"
-            :class=""
-            class="text-xs border border-gray py-1 px-4 rounded-xl transition-all duration-100 text-gray"
+            :class="(email && password) ? 'btn-ok' : 'btn'"
+            class="text-xs border py-1 px-4 rounded-xl transition-all duration-100"
           >
-              Login
+            Login
           </button>
         </div>
       </form>

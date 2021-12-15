@@ -10,6 +10,10 @@ module.exports = {
         white: colors.white,
         gray: '#A9A9A9',
         light: '#F1F1F4',
+        green: '#6EE7B7',
+      },
+      borderColor: {
+        green: '#6EE7B7',
       },
     },
     fontSize: {
