@@ -5,15 +5,4 @@
   @apply p-4 text-xs;
 }
 
-.btn {
-  @apply text-gray;
-}
-
-.btn-ok {
-  @apply bg-green-300 border-green-300 text-white;
-}
-
-.btn-warn {
-  @apply bg-red-300 border-red-300 text-white;
-}
 @tailwind utilities;

@@ -22,95 +22,110 @@
         method="post"
         x-data="{
           ...$store.behavior_methods,
-          ...$store.data,
           ...$store.condition_methods,
+          email: false,
+          password: false,
         }"
         autocomplete="off"
         @submit.prevent="submit"
       >
-
+      
         <h3
           class="text-base h-10 px-4"
           x-text="inputs.message"
         ></h3>
 
         <label
-          x-init="email = inputs.email",
+          x-data="{ valid: false }"
           for="email"
-          class="relative block bg-gray-100"
+          class="relative block bg-light"
         >
-          <svg
-            class="absolute h-3 w-3 inset-y-1/2 transform -translate-y-1/2 ml-4"
-            :class="email.value ? 'text-black' : 'text-gray'"
-            viewBox="0 0 24 24">
-              <path fill="currentColor" d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"/>
-          </svg>
           <input
             id="email"
-            class="block w-full outline-none component pl-9"
+            class="peer block w-full outline-none component pl-9"
             type="email"
             required
             placeholder="Email address"
-            x-model="email.value"
-            @input="inputChange($el)"
-            @blur="completeInput($el)"
+            @input="valid = inputChange($el); email = false"
+            @blur="email = completeInput($el)"
             @invalid="showError($el)"
           />
 
-          <div class="absolute inset-y-0 right-0 pr-5 flex items-center text-sm leading-5">
-            <div
-              x-show="email.value"
-              :class="email.error ? 'border-red-400' : 'border-green-400'"
-              class="w-2 h-3 border-r border-b transform rotate-45">
+          <svg
+            class="absolute h-3 w-3 inset-y-1/2 transform -translate-y-1/2
+                  ml-4 text-black peer-placeholder-shown:text-gray"
+            viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"/>
+          </svg>
 
-            </div>
-          </div>
+          <div
+            x-show="valid"
+            class="absolute inset-y-0 right-0 pr-4 flex items-center text-sm leading-5"
+          >
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="#6EE7B7"
+                d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z"
+              />
+            </svg>
+        </div>
+
+          <!-- <div class="absolute inset-y-0 right-0 pr-6 flex items-center text-sm leading-5 scale-150">
+            <svg class="h-2 w-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+            </svg>
+          </div> -->
 
           <div
             class="transition-all duration-100"
-            :class="email.completed ? 'w-full' : email.value ? 'w-2/3' : 'w-0'"
+            :class="email ? 'w-full' : valid ? 'w-2/3' : 'w-0'"
           >
             <div
-              :class="email.error ? 'bg-red-300' : 'bg-green-300'"
-              class="h-px"
+              class="h-px bg-green-300"
             ></div>
           </div>
         </label>
 
         <label
-          x-data="{ show: false }"
-          x-init="password = inputs.password"
+          x-data="{
+            valid: false,
+            show: false
+          }"
           for="password"
-          class="relative block bg-gray-100"
+          class="relative block bg-light w-full"
         >
-          
           <input
             id="password"
-            class="relative block w-full outline-none component pl-9"
+            class="peer relative block w-full outline-none component pl-9"
             :type="show ? 'text' : 'password'"
-            placeholder="Password"
             minlength="6"
-            x-model="password.value"
-            @input="inputChange($el)"
-            @blur="completeInput($el)"
+            required
+            placeholder="Password"
+            @input="valid = inputChange($el); password = false"
+            @blur="password = completeInput($el)"
             @invalid="showError($el)"
           >
 
           <svg 
-            class="absolute h-4 w-3 inset-y-1/2 transform -translate-y-1/2 ml-4"
+            class="absolute h-4 w-3 inset-y-1/2 transform -translate-y-1/2 ml-4 text-black peer-placeholder-shown:text-gray"
             viewBox="3 3 18 18"
           >
             <path
-              :fill="password.value ? '#000' : '#A9A9A9'"
+              fill="currentColor"
               d="M 12 1 C 8.6761905 1 6 3.6761905 6 7 L 6 8 C 4.9069372 8 4 8.9069372 4 10 L 4 20 C 4 21.093063 4.9069372 22 6 22 L 18 22 C 19.093063 22 20 21.093063 20 20 L 20 10 C 20 8.9069372 19.093063 8 18 8 L 18 7 C 18 3.6761905 15.32381 1 12 1 z M 12 3 C 14.27619 3 16 4.7238095 16 7 L 16 8 L 8 8 L 8 7 C 8 4.7238095 9.7238095 3 12 3 z M 6 10 L 18 10 L 18 20 L 6 20 L 6 10 z M 12 13 C 10.9 13 10 13.9 10 15 C 10 16.1 10.9 17 12 17 C 13.1 17 14 16.1 14 15 C 14 13.9 13.1 13 12 13 z" />
           </svg>
 
-          <div class="absolute inset-y-0 right-0 pr-4 flex items-center text-sm leading-5">
+          <div
+            class="absolute inset-y-0 right-0 pr-4 flex items-center text-sm leading-5"
+            @click="show = !show"
+          >
             <svg
-              class="h-3 w-4 transition-all duration-100"
-              @click="show = !show"
+              class="h-4 w-4 transition-all duration-100"
               :class="show ? 'text-black' : 'text-gray'"
-              viewbox="0 0 24 24">
+              viewbox="0 0 24 20">
               <path
                 fill="currentColor"
                 d="M12.015 7c4.751 0 8.063 3.012 9.504 4.636-1.401 1.837-4.713 5.364-9.504 5.364-4.42 0-7.93-3.536-9.478-5.407 1.493-1.647 4.817-4.593 9.478-4.593zm0-2c-7.569 0-12.015 6.551-12.015 6.551s4.835 7.449 12.015 7.449c7.733 0 11.985-7.449 11.985-7.449s-4.291-6.551-11.985-6.551zm-.015 3c-2.21 0-4 1.791-4 4s1.79 4 4 4c2.209 0 4-1.791 4-4s-1.791-4-4-4zm-.004 3.999c-.564.564-1.479.564-2.044 0s-.565-1.48 0-2.044c.564-.564 1.479-.564 2.044 0s.565 1.479 0 2.044z"/>
@@ -119,11 +134,10 @@
 
           <div
             class="transition-all duration-100"
-            :class="password.completed ? 'w-full' : password.value ? 'w-2/3' : 'w-0'"
+            :class="password ? 'w-full' : valid ? 'w-2/3' : 'w-0'"
           >
             <div
-              :class="password.error ? 'bg-red-300' : 'bg-green-300'"
-              class="h-px"
+              class="h-px bg-green-300"
             ></div>
           </div>
         </label>
@@ -154,10 +168,11 @@
 
           <button
             type="submit"
-            x-text="inputs.registration ? 'Sign up' : isAnyPropertyTrue('error') ? 'Retry' : isAnyPropertyTrue('completed') ? 'Log in' : 'Login'"
-            :class="isAnyPropertyTrue('error') ? 'btn-warn' : isAnyPropertyTrue('completed') ? 'btn-ok' : 'btn'"
-            class="text-xs border-solid border py-1 px-4 rounded-xl transition-all duration-100"
-          ></button>
+            :class=""
+            class="text-xs border border-gray py-1 px-4 rounded-xl transition-all duration-100 text-gray"
+          >
+              Login
+          </button>
         </div>
       </form>
     </section>
