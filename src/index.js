@@ -51,7 +51,6 @@ Alpine.store('behavior_methods', {
       element.setCustomValidity(`Enter the ${element.id}`);
     }
   },
-  
   // submit() {
   //   if (this.data.inputs.registration) {
   //     localStorage.setItem(this.data.inputs.email.value, this.data.inputs.password.value);

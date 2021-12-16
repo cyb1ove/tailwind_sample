@@ -15,6 +15,9 @@ module.exports = {
       borderColor: {
         green: '#6EE7B7',
       },
+      textColor: {
+        green: '#6EE7B7',
+      },
     },
     fontSize: {
       xs: '.65rem',
