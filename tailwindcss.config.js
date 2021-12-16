@@ -1,8 +1,8 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/*.{html,js,css}'],
+  // mode: 'jit',
+  // purge: ['./src/*.{html,js,css}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -17,6 +17,12 @@ module.exports = {
       },
       textColor: {
         green: '#6EE7B7',
+      },
+      backgroundColor: {
+        gray: '#A9A9A9',
+      },
+      height: {
+        screen: '100vh',
       },
     },
     fontSize: {
