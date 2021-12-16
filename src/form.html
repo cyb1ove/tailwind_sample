@@ -1,0 +1,65 @@
+<form
+  id="form"
+  action=""
+  method="post"
+  x-data="{
+    ...$store.behavior_methods,
+    ...$store.condition_methods,
+    fields: {
+      {{ fields.map(x => `${x}: false`).join(',\n') }}
+    }
+  }"
+  autocomplete="off"
+  @submit.prevent="submit"
+>
+  <h3
+    class="text-base h-10 px-4"
+    x-text="inputs.message"
+  ></h3>
+
+  <each loop="field in fields">
+    <if condition="field === 'email'">
+      <include src="./formfields/email/email.html"></include>
+    </if>
+
+    <if condition="field === 'password'">
+      <include src="./formfields/password/password.html"></include>
+    </if>
+
+    <!-- <if condition="field='repeatPassword'">
+      <include src="./formfields/repeatPassword/repeatPassword.html"></include>
+    </if> -->
+  </each>
+
+  <div x-data="{ ...$store.condition_methods }" class="flex justify-between component">
+    <button
+      class="flex items-center text-xs text-gray"
+    >
+      <svg
+        class="h-5 w-3 text-gray"
+        viewBox="0 0 12 12"
+        version="1.1"
+      >
+        <path
+          fill="currentColor"
+          style="fill:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(169,169,169);stroke-opacity:1;stroke-miterlimit:4;"
+          d="M 89.003906 9.023438 C 44.472656 9.550781 8.730469 45.9375 9.023438 90.46875 C 9.257812 135.058594 45.46875 170.976562 90 170.976562 C 134.53125 170.976562 170.742188 135.058594 170.976562 90.46875 C 171.269531 45.9375 135.527344 9.550781 90.996094 9.023438 Z M 90 46.992188 L 90 105 M 90 130.019531 L 90 131.015625 " transform="matrix(0.0666667,0,0,0.0666667,0,0)"
+        />
+      </svg>
+      
+      <span
+        class="pl-2"
+      >
+        Forgot Password
+      </span>
+    </button>
+
+    <button
+      type="submit"
+      :class="Object.values(fields).every(x => x) ? 'btn-ok' : 'btn'"
+      class="text-xs border py-1 px-4 rounded-xl transition-all duration-100"
+    >
+      Login
+    </button>
+  </div>
+</form>
