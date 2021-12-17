@@ -1,8 +1,0 @@
-@tailwind base;
-@tailwind components;
-
-.component {
-  @apply p-4 text-xs;
-}
-
-@tailwind utilities;
