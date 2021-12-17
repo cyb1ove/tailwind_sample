@@ -1,42 +1,54 @@
+<script locals>
+  module.exports = {
+    fields: ({
+      'Log in': ['email', 'password'],
+      'Sign up': ['email', 'password', 'repassword'],
+      'Email me': ['email']
+    })
+  }
+</script>
+
 <form
   id="form"
   action=""
   method="post"
+  class="group"
   x-data="{
     ...$store.behavior_methods,
     ...$store.condition_methods,
-    fields: {
-      {{ fields.map(x => `${x}: false`).join(',\n') }}
-    }
   }"
   autocomplete="off"
   @submit.prevent="submit"
 >
   <h3
-    class="text-base h-10 px-4"
+    class="h-10 px-4 text-base"
     x-text="inputs.message"
   ></h3>
 
-  <each loop="field in fields">
+  <each
+    loop="field in fields[type]"
+  >
     <if condition="field === 'email'">
       <include src="./formfields/email/email.html"></include>
     </if>
 
     <if condition="field === 'password'">
-      <include src="./formfields/password/password.html"></include>
+      <include src="./formfields/password/password.html" locals='{ "id": "password" }'>
+      </include>
     </if>
 
-    <!-- <if condition="field='repeatPassword'">
-      <include src="./formfields/repeatPassword/repeatPassword.html"></include>
-    </if> -->
+    <if condition="field === 'repassword'">
+      <include src="./formfields/password/password.html" locals='{ "id": "repassword" }'>
+      </include>
+    </if>
   </each>
 
   <div x-data="{ ...$store.condition_methods }" class="flex justify-between component">
-    <button
+    <a href="forgetPassword.html"
       class="flex items-center text-xs text-gray"
     >
       <svg
-        class="h-5 w-3 text-gray"
+        class="w-3 h-5 text-gray"
         viewBox="0 0 12 12"
         version="1.1"
       >
@@ -52,14 +64,13 @@
       >
         Forgot Password
       </span>
-    </button>
+    </a>
 
     <button
       type="submit"
-      :class="Object.values(fields).every(x => x) ? 'btn-ok' : 'btn'"
-      class="text-xs border py-1 px-4 rounded-xl transition-all duration-100"
+      class="px-4 py-1 text-xs transition-all duration-100 border text-gray rounded-xl group-valid:bg-green group-valid:border-green group-valid:text-white"
     >
-      Login
+      {{ type }}
     </button>
   </div>
 </form>
