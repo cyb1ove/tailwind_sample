@@ -1,38 +1,10 @@
-// /* eslint-disable guard-for-in */
+/* eslint-disable no-param-reassign */
+
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-// Alpine.store('data', {
-//   inputs: {
-//     email: {
-//       value: '',
-//       error: false,
-//       completed: false,
-//     },
-//     password: {
-//       value: '',
-//       error: false,
-//       completed: false,
-//     },
-//     registration: false,
-//     message: 'Welcome',
-//   },
-// });
-
 Alpine.store('behavior_methods', {
-  // data: Alpine.store('data'),
-  // verifyUser() {
-  //   const email = this.data.inputs.email.value;
-
-  //   return Boolean(localStorage.getItem(email));
-  // },
-  // verifyPassword() {
-  //   const email = this.data.inputs.email.value;
-  //   const password = this.data.inputs.password.value;
-
-  //   return password === localStorage.getItem(email);
-  // },
   completeInput(element) {
     element.setCustomValidity('');
     element.checkValidity();
@@ -51,43 +23,73 @@ Alpine.store('behavior_methods', {
       element.setCustomValidity(`Enter the ${element.id}`);
     }
   },
-  // submit() {
-  //   if (this.data.inputs.registration) {
-  //     localStorage.setItem(this.data.inputs.email.value, this.data.inputs.password.value);
-  //     this.data.inputs.registration = false;
+  clearInput(input) {
+    input.value = '';
+    input.dispatchEvent(new Event('input'));
+  },
+  login(password, form) {
+    if (!password) {
+      this.clearInput(form.password);
 
-  //     return;
-  //   }
+      return form.email.id;
+    }
 
-  //   if (!this.verifyUser()) {
-  //     this.data.inputs.registration = true;
-  //     this.data.inputs.message = 'Registration';
-  //   } else {
-  //     this.data.inputs.email.error = false;
-  //   }
+    if (password !== form.password.value) {
+      console.log(password, form.password.value);
+      return form.password.id;
+    }
 
-  //   if (!this.verifyPassword()) {
-  //     this.data.inputs.password.error = true;
-  //     this.data.inputs.password.value = '';
-  //     this.data.inputs.password.completed = false;
-  //     this.data.inputs.message = 'Incorrect password';
-  //   } else {
-  //     this.data.inputs.email.error = false;
-  //     this.data.inputs.email.completed = false;
-  //     this.data.inputs.email.value = '';
-  //     this.data.inputs.password.error = false;
-  //     this.data.inputs.password.completed = false;
-  //     this.data.inputs.password.value = '';
+    this.clearInput(form.email);
+    this.clearInput(form.password);
+    console.log('Success');
 
-  //     this.data.inputs.message = "You're are signed";
-  //   }
-  // },
+    return false;
+  },
+  registration(password, form) {
+    if (password) {
+      this.clearInput(form.password);
+      this.clearInput(form.repassword);
+
+      return form.email.id;
+    }
+
+    if (form.password.value !== form.repassword.value) {
+      return form.repassword.id;
+    }
+
+    localStorage.setItem(form.email.value, form.password.value);
+    window.location.href = 'login.html';
+
+    return false;
+  },
+  emailForgottenPassword(password, form) {
+    if (!password) {
+      this.clearInput(form.email);
+
+      return form.email.id;
+    }
+
+    this.clearInput(form.email);
+
+    return false;
+  },
+  submit(form) {
+    const password = localStorage.getItem(form.email.value);
+
+    if (form.id === 'Log in') {
+      return this.login(password, form);
+    }
+
+    if (form.id === 'Sign up') {
+      return this.registration(password, form);
+    }
+
+    if (form.id === 'Email me') {
+      return this.emailForgottenPassword(password, form);
+    }
+
+    return new Error('Error');
+  },
 });
-
-// Alpine.store('condition_methods', {
-//   isAnyPropertyTrue(prop) {
-//     return Object.values(Alpine.store('data').inputs).some((currentInput) => currentInput[prop]);
-//   },
-// });
 
 Alpine.start();

@@ -9,20 +9,22 @@
 </script>
 
 <form
-  id="form"
+  id="{{ type }}"
   action=""
   method="post"
   class="group"
   x-data="{
     ...$store.behavior_methods,
-    ...$store.condition_methods,
+    isWrongInput: false,
   }"
   autocomplete="off"
-  @submit.prevent="submit"
+  @submit.prevent="isWrongInput = submit($el);"
 >
   <h3
     class="h-10 px-4 text-base"
-    x-text="inputs.message"
+    x-text="isWrongInput === 'email' ? 'Oops' 
+          : isWrongInput === 'password' ? 'Wrong password'
+          : isWrongInput === 'repassword' ? 'Password does not match' : 'Welcome'"
   ></h3>
 
   <each
@@ -43,34 +45,37 @@
     </if>
   </each>
 
-  <div x-data="{ ...$store.condition_methods }" class="flex justify-between component">
-    <a href="forgetPassword.html"
-      class="flex items-center text-xs text-gray"
-    >
-      <svg
-        class="w-3 h-5 text-gray"
-        viewBox="0 0 12 12"
-        version="1.1"
-      >
-        <path
-          fill="currentColor"
-          style="fill:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(169,169,169);stroke-opacity:1;stroke-miterlimit:4;"
-          d="M 89.003906 9.023438 C 44.472656 9.550781 8.730469 45.9375 9.023438 90.46875 C 9.257812 135.058594 45.46875 170.976562 90 170.976562 C 134.53125 170.976562 170.742188 135.058594 170.976562 90.46875 C 171.269531 45.9375 135.527344 9.550781 90.996094 9.023438 Z M 90 46.992188 L 90 105 M 90 130.019531 L 90 131.015625 " transform="matrix(0.0666667,0,0,0.0666667,0,0)"
-        />
-      </svg>
-      
-      <span
-        class="pl-2"
-      >
-        Forgot Password
-      </span>
-    </a>
-
+  <div x-data="{ ...$store.condition_methods }" class="flex flex-row-reverse justify-between component">
     <button
       type="submit"
-      class="px-4 py-1 text-xs transition-all duration-100 border text-gray rounded-xl group-valid:bg-green group-valid:border-green group-valid:text-white"
+      class="px-4 py-1 text-xs transition-all duration-100 border text-gray rounded-xl group-invalid:pointer-events-none"
+      x-text="isWrongInput ? 'Retry' : '{{ type }}'"
+      :class="isWrongInput ? 'bg-red border-red text-white' : 'group-valid:bg-green group-valid:border-green group-valid:text-white'"
     >
-      {{ type }}
     </button>
+    
+    <if condition="type === 'Log in'">
+      <a href="forgetPassword.html"
+        class="flex items-center text-xs text-gray"
+      >
+        <svg
+          class="w-3 h-5 text-gray"
+          viewBox="0 0 12 12"
+          version="1.1"
+        >
+          <path
+            fill="currentColor"
+            style="fill:none;stroke-width:16;stroke-linecap:round;stroke-linejoin:miter;stroke:rgb(169,169,169);stroke-opacity:1;stroke-miterlimit:4;"
+            d="M 89.003906 9.023438 C 44.472656 9.550781 8.730469 45.9375 9.023438 90.46875 C 9.257812 135.058594 45.46875 170.976562 90 170.976562 C 134.53125 170.976562 170.742188 135.058594 170.976562 90.46875 C 171.269531 45.9375 135.527344 9.550781 90.996094 9.023438 Z M 90 46.992188 L 90 105 M 90 130.019531 L 90 131.015625 " transform="matrix(0.0666667,0,0,0.0666667,0,0)"
+          />
+        </svg>
+      
+        <span
+          class="pl-2"
+        >
+          Forgot Password
+        </span>
+      </a>
+    </if>
   </div>
 </form>
