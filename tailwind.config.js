@@ -1,12 +1,12 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  // mode: 'jit',
-  // purge: [
-  //   './src/*.{html,js,css}',
-  //   './src/formfields/**/*.html',
-  //   './src/forms/*.html',
-  // ],
+  mode: 'jit',
+  purge: [
+    './src/*.{html,js,css}',
+    './src/formfields/**/*.html',
+    './src/forms/*.html',
+  ],
   presets: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
