@@ -11,7 +11,7 @@
       x-init="email = $el.id"
       class="block w-4/5 outline-none peer component pl-9"
       type="email"
-      required
+      :required="inputs.includes('email')"
       placeholder="Email address"
       @input="valid = inputChange($el); completed = false; isWrongInput = false"
       @blur="completed = completeInput($el)"
