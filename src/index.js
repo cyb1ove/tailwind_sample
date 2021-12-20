@@ -36,18 +36,16 @@ function getMethods() {
       }
 
       if (password !== form.password.value) {
-        console.log(password, form.password.value);
         return form.password.id;
       }
 
       this.clearInput(form.email);
       this.clearInput(form.password);
-      console.log('Success');
 
       return false;
     },
     registration(password, form) {
-      if (password) {
+      if (  password) {
         this.clearInput(form.password);
         this.clearInput(form.repassword);
 

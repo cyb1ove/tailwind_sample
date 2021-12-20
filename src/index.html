@@ -12,11 +12,13 @@
   <body
     class="flex flex-col justify-between w-full h-screen m-auto md:max-w-xs md:h-full"
     x-data="{
-      url: window.location.origin + window.location.pathname,
-      type: (new URLSearchParams(window.location.search)).get('type')
+      type: (new URLSearchParams(window.location.search)).get('type'),
+      url: window.location.origin + window.location.pathname
     }"
   >
-    <section class="flex flex-col">
+    <section
+      class="flex flex-col"
+    >
       <div class="w-12 mx-auto my-12">
         <a :href="url.concat('?type=login')">
           <img src="./images/abler-logo.svg" alt="Home Logo" />
@@ -69,8 +71,9 @@
           <button
             type="submit"
             class="px-4 py-1 text-xs capitalize transition-all duration-100 border text-gray rounded-xl group-invalid:pointer-events-none"
-            x-text="isWrongInput ? 'Retry' : type"
-            :class="isWrongInput ? 'bg-red border-red text-white' : 'group-valid:bg-green group-valid:border-green group-valid:text-white'"
+            :class="isWrongInput
+              ? 'bg-red border-red text-white'
+              : 'group-valid:bg-green group-valid:border-green group-valid:text-white'"
           >
           </button>
       
@@ -82,7 +85,6 @@
             <svg
               class="w-3 h-5 text-gray"
               viewBox="0 0 12 12"
-              version="1.1"
             >
               <path
                 fill="currentColor"
@@ -131,7 +133,7 @@
 
   <script>
     const url = window.location.href;
-    console.log('1')
+
     if (!url.includes('?')) {
       window.location.replace(`${url}?type=login`)
     }
