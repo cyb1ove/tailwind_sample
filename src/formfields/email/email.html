@@ -6,17 +6,20 @@
   for="email"
   class="relative block"
 >
-    <input
-      id="email"
-      x-init="email = $el.id"
-      class="block w-4/5 outline-none peer component pl-9"
-      type="email"
-      :required="inputs.includes('email')"
-      placeholder="Email address"
-      @input="valid = inputChange($el); completed = false; isWrongInput = false"
-      @blur="completed = completeInput($el)"
-      @invalid="showError($el)"
-    />
+  <input
+    id="email"
+    x-init="email = $el.id"
+    class="block w-4/5 outline-none peer component pl-9"
+    type="email"
+    :required="inputs.includes('email')"
+    placeholder="Email address"
+    @input="valid = inputChange($el);
+            completed = false;
+            isWrongInput = false"
+    @blur="completed = completeInput($el)"
+    @invalid="showError($el)"
+  />
+  
   <svg
     class="absolute w-3 h-3 ml-4 text-black transform -translate-y-1/2 inset-y-1/2 peer-placeholder-shown:text-gray"
     viewBox="0 0 24 24">
@@ -64,7 +67,6 @@
         class="h-full"
         :class="email === isWrongInput ? 'bg-red' : 'bg-green'"
       ></div>
-      <span x-text="name"></span>
     </div>
   </div>
 </label>

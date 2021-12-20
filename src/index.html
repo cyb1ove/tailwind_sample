@@ -10,14 +10,17 @@
   </head>
 
   <body
-    class="flex flex-col justify-between w-full md:max-w-xs m-auto h-screen md:h-full"
+    class="flex flex-col justify-between w-full h-screen m-auto md:max-w-xs md:h-full"
     x-data="{
+      url: window.location.origin + window.location.pathname,
       type: (new URLSearchParams(window.location.search)).get('type')
     }"
   >
     <section class="flex flex-col">
       <div class="w-12 mx-auto my-12">
-        <img src="./images/abler-logo.svg" alt="Home Logo" />
+        <a :href="url.concat('?type=login')">
+          <img src="./images/abler-logo.svg" alt="Home Logo" />
+        </a>
       </div>
 
       <form
@@ -59,14 +62,14 @@
         <div class="flex flex-row-reverse justify-between component">
           <button
             type="submit"
-            class="px-4 py-1 text-xs transition-all duration-100 border text-gray rounded-xl group-invalid:pointer-events-none capitalize"
+            class="px-4 py-1 text-xs capitalize transition-all duration-100 border text-gray rounded-xl group-invalid:pointer-events-none"
             x-text="isWrongInput ? 'Retry' : type"
             :class="isWrongInput ? 'bg-red border-red text-white' : 'group-valid:bg-green group-valid:border-green group-valid:text-white'"
           >
           </button>
       
           <a
-            :href="window.location.origin.concat('/?type=email me')"
+            :href="url.concat('?type=email me')"
             x-show="type !== 'email me'"
             class="flex items-center text-xs text-gray"
           >
@@ -92,7 +95,7 @@
       </form>
     </section>
 
-    <footer class="flex justify-between p-4 sm:mt-16 text-xs bg-light h-14 text-gray">
+    <footer class="flex justify-between p-4 text-xs sm:mt-16 bg-light h-14 text-gray">
       <button class="transform bg-white shadow-md cursor-pointer rounded-xl">
         <svg
           width="24"
@@ -106,7 +109,7 @@
       </button>
 
       <a
-        :href="window.location.origin.concat('?type=sign up')"
+        :href="url.concat('?type=sign up')"
         class="flex items-center cursor-pointer"
       >
         <span class="pr-2">New user</span>
