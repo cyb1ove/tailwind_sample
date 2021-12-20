@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css" />
     <title>Document</title>
     <script defer src="index.js"></script>
+    <script>
+      const base_url = window.location.href;
+      console.log(1);
+
+      if (!base_url.includes('?')) {
+        window.location.replace(`${base_url}?type=login`)
+      }
+    </script>
   </head>
 
   <body
@@ -132,11 +140,4 @@
     </footer>
   </body>
 
-  <script>
-    const url = window.location.href;
-
-    if (!url.includes('?')) {
-      window.location.replace(`${url}?type=login`)
-    }
-  </script>
 </html>
