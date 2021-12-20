@@ -74,6 +74,7 @@
             :class="isWrongInput
               ? 'bg-red border-red text-white'
               : 'group-valid:bg-green group-valid:border-green group-valid:text-white'"
+            x-text="isWrongInput ? 'Retry' : type"
           >
           </button>
       
