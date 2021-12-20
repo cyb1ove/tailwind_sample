@@ -1,0 +1,13 @@
+<div
+  class="h-px bg-light"
+>
+  <div
+    class="h-full transition-all duration-100"
+    :class="completed ? 'w-full' : valid ? 'w-2/3' : 'w-0'"
+  >
+    <div
+      class="h-full"
+      :class="'{{ type }}' === isWrongInput ? 'bg-red' : 'bg-green'"
+    ></div>
+  </div>
+</div>

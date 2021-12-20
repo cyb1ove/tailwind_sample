@@ -48,15 +48,21 @@
         ></h3>
 
         <div x-show="inputs.includes('email')">
-          <include src="formfields/email/email.html"></include>
+          <include src="formfields/input.html" locals='{
+            "type": "email"
+          }'></include>
         </div>
 
         <div x-show="inputs.includes('password')">
-          <include src="formfields/password/password.html"></include>
+          <include src="formfields/input.html" locals='{
+            "type": "password"
+          }'></include>
         </div>
         
         <div x-show="inputs.includes('repassword')">
-          <include src="formfields/repassword/repassword.html"></include>
+          <include src="formfields/input.html" locals='{
+            "type": "repassword"
+          }'></include>
         </div>
 
         <div class="flex flex-row-reverse justify-between component">

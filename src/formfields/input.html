@@ -1,0 +1,49 @@
+<script locals>
+  module.exports = {
+    placeholders: {
+      'email': 'Email address',
+      'password': 'Password',
+      'repassword': 'Confirm password'
+    },
+    actualType: {
+      'email': 'email',
+      'password': 'password',
+      'repassword': 'password'
+    }
+  }
+</script>
+
+<label
+  x-data="{
+    valid: false,
+    completed: false,
+    show: false
+  }"
+  x-init="$watch('isWrongInput', value => show = value === '{{ type }}')"
+  for="{{ type }}"
+  class="relative block w-full"
+>
+  
+  <input
+    id="{{ type }}"
+    class="relative block w-4/5 outline-none peer component pl-9"
+    type="{{ actualType[type] }}"
+    :type="show ? 'text' : '{{ actualType[type] }}'"
+    :required="inputs.includes('{{ type }}')"
+    placeholder="{{ placeholders[type] }}"
+    @input="valid = inputChange($el);
+            completed = false;
+            isWrongInput = false"
+    @blur="completed = completeInput($el)"
+    @invalid="showError($el)"
+  >
+
+  <include src="./formfields/{{ type }}/left_icon.html"></include>
+
+  <include src="./formfields/{{ type }}/right_icon.html"></include>
+
+  <include src="./formfields/status_line/status_line.html" locals='{
+    "type": "{{ type }}"
+  }'></include>
+</label>
+

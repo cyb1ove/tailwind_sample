@@ -1,0 +1,29 @@
+<div
+  x-show="valid && isWrongInput !== 'email'"
+  class="absolute inset-y-0 right-0 flex items-center pr-4 text-sm leading-5 text-green"
+>
+  <svg
+    class="w-4 h-4"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z"
+    />
+  </svg>
+</div>
+
+<div
+  x-show="isWrongInput === 'email'"
+  class="absolute inset-y-0 right-0 flex items-center pr-4 text-sm leading-5 scale-150 text-red"
+>
+  <svg
+    class="w-2 h-2"
+    viewBox="0 0 27 27"
+  >
+    <path
+      fill="currentColor"
+      d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"
+    />
+  </svg>
+</div>

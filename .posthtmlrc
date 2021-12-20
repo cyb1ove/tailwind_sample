@@ -7,11 +7,17 @@
       "root": "src"
     },
     "posthtml-extend": {
-      "root": "src",
-      "encoding": "utf8"
+      "root": "src"
     },
     "posthtml-modules": {
       "root": "src"
+    },
+    "posthtml-extra-attributes": {
+      "attributes": {
+        "[type=password]": {
+          "minlength": "6"
+        }
+      }
     }
   }
 }
