@@ -9,7 +9,6 @@
     <script defer src="index.js"></script>
     <script>
       const base_url = window.location.href;
-      console.log(1);
 
       if (!base_url.includes('?')) {
         window.location.replace(`${base_url}?type=login`)
@@ -18,7 +17,7 @@
   </head>
 
   <body
-    class="flex flex-col justify-between w-full h-screen m-auto md:max-w-xs md:h-full"
+    class="flex flex-col justify-between w-full h-screen m-auto md:max-w-xs"
     x-data="{
       type: (new URLSearchParams(window.location.search)).get('type'),
       url: window.location.origin + window.location.pathname
